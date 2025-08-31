@@ -109,7 +109,7 @@ async def summarize_document(request: SummarizeRequest):
             async for chunk in llm.astream(prompt):
                 yield chunk.content  # each token
 
-        return StreamingResponse(token_stream(), media_type="text/plain")
+        return StreamingResponse(token_stream(), media_type="text/plain" , headers={"Cache-Control": "no-store"})
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error summarizing document: {e}")

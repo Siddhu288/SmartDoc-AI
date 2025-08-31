@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.rag import get_rag_chain
 from app.db.chroma_store import get_chroma_client
-
+from fastapi.responses import JSONResponse
 router = APIRouter()
 
 class QueryRequest(BaseModel):
@@ -23,7 +23,7 @@ async def answer_question(request: QueryRequest):
 
         # Otherwise, run the QA chain
         response = qa_chain.invoke({"query": request.query})
-        return {"answer": response["result"]}
+        return JSONResponse({"answer": response["result"]}, headers={"Cache-Control": "no-store"})
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error querying document: {e}")
