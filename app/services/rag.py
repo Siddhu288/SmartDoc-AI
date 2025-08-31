@@ -49,7 +49,7 @@ def get_rag_chain(collection_name: str):
     client = get_chroma_client()
     vector_store = Chroma(client=client, collection_name=collection_name, embedding_function=embeddings)
     
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.5, google_api_key=GEMINI_API_KEY)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5, google_api_key=GEMINI_API_KEY)
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",

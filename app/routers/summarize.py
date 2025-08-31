@@ -47,8 +47,6 @@
 
 
 
-
-
 import asyncio
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
@@ -99,7 +97,7 @@ async def summarize_document(request: SummarizeRequest):
 
         # Setup streaming LLM
         llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
+            model="gemini-2.5-flash",
             temperature=0.5,
             google_api_key=GEMINI_API_KEY,
             streaming=True
@@ -110,7 +108,6 @@ async def summarize_document(request: SummarizeRequest):
             prompt = f"Summarize the following document:\n\n{full_text}"
             async for chunk in llm.astream(prompt):
                 yield chunk.content  # each token
-            yield "\n\n  ----- Type 'close' to end the conversation"
 
         return StreamingResponse(token_stream(), media_type="text/plain")
 
