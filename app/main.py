@@ -8,7 +8,8 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",  # React frontend development server
     "http://localhost:8000", 
-    "http://localhost:5173" # FastAPI development server (if serving frontend from here)
+    "http://localhost:5173" 
+    "https://smartdoc-ai-alpha.vercel.app" # FastAPI development server (if serving frontend from here)
     # Add your Vercel frontend URL here when deploying
 ]
 
