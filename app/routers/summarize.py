@@ -45,9 +45,6 @@
 #         raise HTTPException(status_code=500, detail=f"Error summarizing document: {e}")
 
 
-
-
-import asyncio
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
@@ -60,7 +57,9 @@ from typing import Optional
 import os
 
 load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or "AIzaSyBqFJMlVbjCfHzkXvOhA4tsiH9CEYybNEw"
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") 
+
 
 router = APIRouter()
 
@@ -88,8 +87,8 @@ async def summarize_document(request: SummarizeRequest):
             raise HTTPException(status_code=404, detail="No documents found in collection")
 
         langchain_docs = [
-            Document(page_content=doc, metadata=meta)
-            for doc, meta in zip(all_docs["documents"], all_docs["metadatas"])
+            Document(page_content=doc, metadata=meta or {})
+            for doc, meta in zip(all_docs["documents"], all_docs.get("metadatas", [{}]*len(all_docs["documents"])))
         ]
 
         # Concatenate docs into one string for summarization
@@ -108,6 +107,8 @@ async def summarize_document(request: SummarizeRequest):
             prompt = f"Summarize the following document:\n\n{full_text}"
             async for chunk in llm.astream(prompt):
                 yield chunk.content  # each token
+
+        
 
         return StreamingResponse(token_stream(), media_type="text/plain" , headers={"Cache-Control": "no-store"})
 

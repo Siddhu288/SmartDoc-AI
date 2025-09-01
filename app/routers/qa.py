@@ -1,4 +1,3 @@
-from operator import contains
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.rag import get_rag_chain

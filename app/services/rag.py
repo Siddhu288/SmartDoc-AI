@@ -1,28 +1,44 @@
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain.chains import RetrievalQA
-# from langchain.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
+from io import BytesIO
+from docx import Document as DocxDocument
+from PyPDF2 import PdfReader
+from langchain.docstore.document import Document
 from dotenv import load_dotenv
-# import chromadb
 import os
-
 from app.db.chroma_store import get_chroma_client
 
 load_dotenv()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or "AIzaSyBqFJMlVbjCfHzkXvOhA4tsiH9CEYybNEw"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-def load_document(file_path: str, file_type: str):
-    if file_type == "pdf":
-        loader = PyPDFLoader(file_path)
-    elif file_type == "docx":
-        loader = Docx2txtLoader(file_path)
-    elif file_type == "txt":
-        loader = TextLoader(file_path)
+def load_document(file_stream: BytesIO, file_extension: str):
+    docs = []
+
+    if file_extension == "txt":
+        text = file_stream.read().decode("utf-8", errors="ignore")
+        docs.append(Document(page_content=text, metadata={}))
+
+    elif file_extension == "pdf":
+        pdf_reader = PdfReader(file_stream)
+        text = ""
+        for page in pdf_reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
+        docs.append(Document(page_content=text.strip(), metadata={}))
+
+    elif file_extension == "docx":
+        doc = DocxDocument(file_stream)
+        text = "\n".join([para.text for para in doc.paragraphs if para.text.strip()])
+        docs.append(Document(page_content=text, metadata={}))
+
     else:
-        raise ValueError("Unsupported file type")
-    return loader.load()
+        raise ValueError(f"Unsupported file type: {file_extension}")
+
+    return docs
 
 def split_documents(documents):
     text_splitter = RecursiveCharacterTextSplitter(

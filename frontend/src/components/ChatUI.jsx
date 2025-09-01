@@ -1,25 +1,109 @@
 import React from 'react';
+import { Box, Typography, Paper } from '@mui/material';
 
 const ChatUI = ({ messages }) => {
+  const containerRef = React.useRef(null);
+
+  React.useEffect(() => {
+  if (containerRef.current) {
+    containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }
+}, [messages]);
+
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
-      {messages.map((msg, index) => (
-        <div
-          key={index}
-          className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+    <Box
+      ref={containerRef}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1,
+        p: 2,
+        overflowY: 'auto',
+        height: '100%',
+        bgcolor: 'background.default',
+      }}
+    >
+      {messages.map((msg, idx) => (
+        <Box
+          key={idx}
+          sx={{
+            alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
+            maxWidth: '80%',
+          }}
         >
-          <div
-            className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg shadow-md
-              ${msg.sender === 'user'
-                ? 'bg-blue-500 text-white rounded-br-none'
-                : 'bg-gray-200 text-gray-800 rounded-bl-none'}`}
-          >
-            {msg.text}
-          </div>
-        </div>
+          {/* <Paper
+            elevation={1}
+            sx={{
+              p: 1.5,
+              bgcolor: msg.sender === 'user' ? '#F3FC8C' : 'common.dark',
+              color: msg.sender === 'user' ? '#000000' : '#ffffff',
+              wordBreak: 'break-word',
+            }}
+          > */}
+          <Paper
+                elevation={1}
+                sx={{
+                  p: 1.5,
+                  bgcolor: msg.sender === 'user' ? '#6666AD' : '#6666AD',
+                  color: msg.sender === 'user' ? '#ffffff' : '#000000',
+                  wordBreak: 'break-word',
+                  position: 'relative', // needed for the tail
+                  borderRadius: 2,      // rounded corners
+                  '&::after': {
+                    content: "''",
+                    position: 'absolute',
+                    width: 0,
+                    height: 0,
+                    bottom: 0,
+                  },
+                }}
+              >
+            <Typography
+              variant="body1"
+              component="span"
+              sx={{
+                whiteSpace: 'pre-wrap',
+                color: msg.sender === 'user' ? 'common.dark' : 'text.primary',
+              }}
+            >
+              {formatMessage(msg.text)}
+            </Typography>
+          </Paper>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 };
+
+// Basic formatter: supports **bold**, *italic*, `inline code`
+function formatMessage(text) {
+  if (!text) return '';
+
+  return text
+    .split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g) // split by formatting tokens
+    .map((part, idx) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={idx}>{part.slice(2, -2)}</strong>;
+      } else if (part.startsWith('*') && part.endsWith('*')) {
+        return <em key={idx}>{part.slice(1, -1)}</em>;
+      } else if (part.startsWith('`') && part.endsWith('`')) {
+        return (
+          <Box
+            key={idx}
+            component="code"
+            sx={{
+              backgroundColor: 'grey.200',
+              borderRadius: 0.5,
+              px: 0.5,
+              color: 'grey.900',
+            }}
+          >
+            {part.slice(1, -1)}
+          </Box>
+        );
+      }
+      return part;
+    });
+}
 
 export default ChatUI;
