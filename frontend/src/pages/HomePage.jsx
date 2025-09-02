@@ -53,7 +53,7 @@ const HomePage = () => {
     { label: 'Features', action: () => scrollToSection('features') },
     { label: 'How it Works', action: () => scrollToSection('how-it-works') },
     { label: 'Upload Docs', action: () => navigate('/upload') },
-    { label: 'Login/Signup', action: () => scrollToSection('cta') },
+    // { label: 'Login/Signup', action: () => scrollToSection('cta') },
   ];
 
   const toggleMobileMenu = () => {
@@ -88,7 +88,7 @@ const HomePage = () => {
                   {item.label}
                 </Link>
               ))}
-              <IconButton onClick={toggleDarkMode} color="inherit">
+              <IconButton onClick={toggleDarkMode}>
                 {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
               </IconButton>
             </Box>
@@ -97,10 +97,10 @@ const HomePage = () => {
           {/* Mobile Navigation */}
           {isMobile && (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <IconButton onClick={toggleDarkMode} color="inherit">
+              <IconButton onClick={toggleDarkMode} >
                 {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
               </IconButton>
-              <IconButton onClick={toggleMobileMenu} color="inherit">
+              <IconButton onClick={toggleMobileMenu} >
                 <MenuIcon />
               </IconButton>
             </Box>

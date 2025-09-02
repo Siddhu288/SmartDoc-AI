@@ -6,7 +6,7 @@ import api from "../api";
 const FileUploadButton = () => {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-
+  const [Error, setError] = useState(null);
   const handleFileSelect = async (event) => {
     const files = Array.from(event.target.files);
     if (files.length === 0) return;
@@ -29,10 +29,11 @@ const FileUploadButton = () => {
           }
         },
       });
-      alert("✅ Files uploaded successfully!");
+      // alert("✅ Files uploaded successfully!");
     } catch (error) {
-      console.error("❌ Error uploading files:", error);
-      alert(error.response?.data?.detail || "Error uploading files.");
+       setError(error);
+      console.error(" Error uploading files:", Error);
+      // alert(error.response?.data?.detail || "Error uploading files.");
     } finally {
       setUploading(false);
       setProgress(0);

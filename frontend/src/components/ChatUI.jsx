@@ -36,7 +36,7 @@ const ChatUI = ({ messages }) => {
                 sx={{
                   p: 1.5,
                   bgcolor: msg.sender === 'user' ? '#6666AD' : '#6666AD',
-                  color: msg.sender === 'user' ? '#ffffff' : '#000000',
+                  color: msg.sender === 'user' ? '#ffffff' : '#ffffff',
                   wordBreak: 'break-word',
                   position: 'relative', // needed for the tail
                   borderRadius: 2,      // rounded corners
@@ -54,7 +54,7 @@ const ChatUI = ({ messages }) => {
               component="span"
               sx={{
                 whiteSpace: 'pre-wrap',
-                color: msg.sender === 'user' ? 'common.dark' : 'text.primary',
+                color: msg.sender === 'user' ? 'common.white' : 'text.white',
               }}
             >
               {formatMessage(msg.text)}

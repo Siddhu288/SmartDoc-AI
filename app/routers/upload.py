@@ -14,7 +14,7 @@ async def upload_document(files: List[UploadFile] = File(...)):
         file_stream = BytesIO(content)
 
         documents = load_document(file_stream, file_extension)
-        print(documents)
+        # print(documents)
         split_docs = split_documents(documents)
         create_embeddings_and_store(split_docs, collection_name)
 

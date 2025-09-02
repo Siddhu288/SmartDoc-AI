@@ -71,5 +71,5 @@ def get_rag_chain(collection_name: str):
         chain_type="stuff",
         retriever=vector_store.as_retriever()
     )
-    print(qa_chain)
+    # print(qa_chain)
     return qa_chain
