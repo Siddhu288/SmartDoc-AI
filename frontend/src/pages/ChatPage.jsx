@@ -109,7 +109,7 @@ const ChatPage = () => {
                   },
                 }}
               >
-                {loading ? "Summarizing..." : "Summarize Document"}
+                {loading ? "Summarizing..." : "Summarize"}
               </Button>
             </Toolbar>
           </AppBar>

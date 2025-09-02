@@ -28,7 +28,7 @@ const ChatUI = ({ messages }) => {
           key={idx}
           sx={{
             alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-            maxWidth: '80%',
+            maxWidth: '75%',
           }}
         >
           <Paper

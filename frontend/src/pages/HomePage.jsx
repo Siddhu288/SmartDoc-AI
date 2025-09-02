@@ -187,7 +187,7 @@ const HomePage = () => {
       {/* How It Works Section */}
       <Box id="how-it-works" sx={{ py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
-          <Typography variant="h2" sx={{ textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
+          <Typography variant="h3" sx={{ textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
             How It Works
           </Typography>
           <Stack
@@ -224,7 +224,7 @@ const HomePage = () => {
       {/* Features Section */}
       <Box id="features" sx={{ py: { xs: 8, md: 12 }, backgroundColor: 'background.paper' }}>
         <Container maxWidth="lg">
-          <Typography variant="h2" sx={{ textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
+          <Typography variant="h3" sx={{ textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
             Features
           </Typography>
           <Box
@@ -273,7 +273,7 @@ const HomePage = () => {
       {/* Demo / Preview Section */}
       <Box sx={{ py: { xs: 8, md: 12 } }}>
         <Container maxWidth="lg">
-          <Typography variant="h2" sx={{ textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
+          <Typography variant="h3" sx={{ textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
             See It In Action
           </Typography>
           <Paper
@@ -352,7 +352,7 @@ const HomePage = () => {
         }}
       >
         <Container maxWidth="md">
-          <Typography variant="h2" sx={{ mb: 3, fontWeight: 'bold' }}>
+          <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold' }}>
             Ready to get started?
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
@@ -389,7 +389,7 @@ const HomePage = () => {
             }}
           >
             <Typography color="text.secondary">
-              © 2024 SmartDoc AI. All rights reserved.
+              © 2025 SmartDoc AI. All rights reserved.
             </Typography>
             <Box sx={{ display: 'flex', gap: 3 }}>
               {['About', 'Privacy Policy', 'Contact'].map((link) => (
