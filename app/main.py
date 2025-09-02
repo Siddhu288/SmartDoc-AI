@@ -24,36 +24,19 @@ app.include_router(upload.router, prefix="/api/v1")
 app.include_router(qa.router, prefix="/api/v1")
 app.include_router(summarize.router, prefix="/api/v1")
 
-# @app.get("/")
-# async def root(request: Request):
-#     return {"message": "Welcome to DocuBot AI!"}
-
 @app.get("/")
-# async def root(request: Request, close: str = None):
-#         client = get_chroma_client()
-#         try:
-#             client.delete_collection("docubot_collection")
-#             print(client.count_collections())  # or request.collection_name if dynamic
-#         except Exception as e:
-#             raise HTTPException(status_code=500, detail=f"Error deleting collection: {e}")
-#         return {"message": "Collection deleted successfully"}
-async def root(request: Request, close: str = None):
+async def root(request: Request):
+    return {"message": "Welcome to DocuBot AI!"}
+
+@app.delete("/api/v1/delete_collection")
+async def delete_collection():
     client = get_chroma_client()
     try:
-        # Delete collection only if it exists
-        try:
+        collections = client.list_collections()
+        if any(c.name == "docubot_collection" for c in collections):
             client.delete_collection("docubot_collection")
-        except Exception as inner_e:
-            # Collection might not exist → ignore
-            print(f"Warning: {inner_e}")
-
-        # Safely check count
-        if hasattr(client, "count_collections"):
-            print(client.count_collections())
+            return {"message": "Collection deleted successfully"}
         else:
-            print("count_collections not available in this client version")
-
+            return {"message": "No collection to delete"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error deleting collection: {str(e)}")
-
-    return {"message": "Collection deleted successfully"}

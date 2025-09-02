@@ -31,15 +31,6 @@ const ChatUI = ({ messages }) => {
             maxWidth: '80%',
           }}
         >
-          {/* <Paper
-            elevation={1}
-            sx={{
-              p: 1.5,
-              bgcolor: msg.sender === 'user' ? '#F3FC8C' : 'common.dark',
-              color: msg.sender === 'user' ? '#000000' : '#ffffff',
-              wordBreak: 'break-word',
-            }}
-          > */}
           <Paper
                 elevation={1}
                 sx={{
