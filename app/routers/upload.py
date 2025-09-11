@@ -1,5 +1,5 @@
 from io import BytesIO
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File
 from typing import List
 from app.services.rag import load_document, split_documents, create_embeddings_and_store
 
