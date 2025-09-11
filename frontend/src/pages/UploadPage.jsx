@@ -24,7 +24,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { useEffect } from 'react';
 import api from '../api';
-
+import toast from 'react-hot-toast';
 const UploadPage = () => {
   const navigate = useNavigate();
   const { darkMode } = useTheme();
@@ -128,10 +128,29 @@ const UploadPage = () => {
       );
 
       // alert("✅ Files uploaded successfully!");
+      toast("File uploaded successfully",{
+        icon:'✅',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+        duration:1500,
+      });
       navigate("/chat");
     } catch (error) {
       console.error("❌ Error uploading files:", error);
-      alert(error.response?.data?.detail || "Error uploading files.");
+      // alert(error.response?.data?.detail || "Error uploading files.");
+      toast.error(error.response?.data?.detail || "Error uploading files."
+        ,{ 
+          style : {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+        },
+        duration:1500,
+       }
+      );
       setFiles(prev => prev.map(f => ({ ...f, status: "error" })));
     } finally {
       setIsUploading(false);

@@ -1,4 +1,5 @@
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UploadPage from "./pages/UploadPage";
 import ChatPage from "./pages/ChatPage";
@@ -9,6 +10,7 @@ function App() {
   return (
     <CustomThemeProvider>
       <Router>
+        <Toaster/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/upload" element={<UploadPage />} />

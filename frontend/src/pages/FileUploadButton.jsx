@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { IconButton, Box, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import api from "../api";
+import { toast } from "react-hot-toast";
 
 const FileUploadButton = () => {
   const [uploading, setUploading] = useState(false);
@@ -29,10 +30,28 @@ const FileUploadButton = () => {
           }
         },
       });
+      toast("File uploaded successfully",{
+        icon:'✅',
+        style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+        },
+        duration:1500,
+      });
       // alert("✅ Files uploaded successfully!");
     } catch (error) {
        setError(error);
       console.error(" Error uploading files:", Error);
+      toast.error(error.response?.data?.detail || "Error uploading files."
+        ,{ 
+          style : {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+        }
+       }
+      );
       // alert(error.response?.data?.detail || "Error uploading files.");
     } finally {
       setUploading(false);
