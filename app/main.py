@@ -8,6 +8,7 @@ app = FastAPI()
 
 # CORS configuration
 origins = [
+    CORSMiddleware,
     "http://localhost:5173",
     "https://smartdoc-ai-alpha.vercel.app" # FastAPI development server (if serving frontend from here)
 ]

@@ -110,7 +110,7 @@ const FileUploadButton = () => {
             component="div"
             sx={{
               position: "absolute",
-              color: "#ffffff",
+              color: "#383F94",
               fontWeight: "bold",
             }}
           >

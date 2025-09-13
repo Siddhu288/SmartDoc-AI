@@ -1,9 +1,9 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain.chains import RetrievalQA
 # from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
 from io import BytesIO
 from docx import Document as DocxDocument
 from PyPDF2 import PdfReader
@@ -49,7 +49,10 @@ def split_documents(documents):
     return text_splitter.split_documents(documents)
 
 def create_embeddings_and_store(documents, collection_name: str):
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    # embeddings = HuggingFaceEmbeddings(
+    #     model_name="sentence-transformers/all-MiniLM-L6-v2",
+    # )
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", google_api_key=GEMINI_API_KEY)
     # Use a persistent client for ChromaDB
     client = get_chroma_client()
     # client = chromadb.PersistentClient(path="../chroma_db")
@@ -62,8 +65,8 @@ def create_embeddings_and_store(documents, collection_name: str):
     return vector_store
 
 def get_rag_chain(collection_name: str):
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GEMINI_API_KEY)
+    # embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", google_api_key=GEMINI_API_KEY)
     client = get_chroma_client()
     vector_store = Chroma(client=client, collection_name=collection_name, embedding_function=embeddings)
     
