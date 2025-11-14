@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from app.services.rag import get_rag_chain
-from app.db.chroma_store import get_chroma_client
+from services.rag import get_rag_chain
+from db.chroma_store import get_chroma_client
 from fastapi.responses import JSONResponse
 router = APIRouter()
 

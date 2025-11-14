@@ -4,7 +4,7 @@ from fastapi.responses import StreamingResponse
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.docstore.document import Document
-from app.db.chroma_store import get_chroma_client
+from db.chroma_store import get_chroma_client
 from dotenv import load_dotenv
 from typing import Optional
 import os

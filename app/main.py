@@ -1,14 +1,13 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from app.db.chroma_store import get_chroma_client
-from app.routers import upload, qa, summarize
+from db.chroma_store import get_chroma_client
+from routers import upload, qa, summarize
 
 app = FastAPI()
 
 # CORS configuration
 origins = [
-    CORSMiddleware,
     "http://localhost:5173",
     "https://smartdoc-ai-alpha.vercel.app" # FastAPI development server (if serving frontend from here)
 ]
@@ -16,6 +15,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

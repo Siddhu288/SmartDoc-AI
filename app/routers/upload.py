@@ -4,7 +4,7 @@ from tempfile import SpooledTemporaryFile
 import shutil
 import gc
 from typing import List
-from app.services.rag import load_document, split_documents, create_embeddings_and_store
+from services.rag import load_document, split_documents, create_embeddings_and_store
 
 router = APIRouter()
 

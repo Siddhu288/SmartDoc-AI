@@ -10,7 +10,7 @@ from PyPDF2 import PdfReader
 from langchain.docstore.document import Document
 from dotenv import load_dotenv
 import os
-from app.db.chroma_store import get_chroma_client
+from db.chroma_store import get_chroma_client
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
