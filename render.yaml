@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: smartdoc-ai-backend
+    env: docker
+    plan: free
+    autoDeploy: true
+
+    dockerfilePath: app/Dockerfile
+
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+
+    healthCheckPath: /health

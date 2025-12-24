@@ -8,7 +8,6 @@ app = FastAPI()
 
 # CORS configuration
 origins = [
-    CORSMiddleware,
     "http://localhost:5173",
     "https://smartdoc-ai-alpha.vercel.app" # FastAPI development server (if serving frontend from here)
 ]
@@ -24,6 +23,10 @@ app.add_middleware(
 app.include_router(upload.router, prefix="/api/v1")
 app.include_router(qa.router, prefix="/api/v1")
 app.include_router(summarize.router, prefix="/api/v1")
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.get("/")
 async def root(request: Request):
