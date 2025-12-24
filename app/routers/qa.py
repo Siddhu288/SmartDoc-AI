@@ -55,7 +55,7 @@ Answer:
 
         # 5️⃣ Create LLM EXPLICITLY (this is the fix)
         llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-pro",
+            model="gemini-3-flash-preview",
             temperature=0.5,
             google_api_key=GEMINI_API_KEY
         )
