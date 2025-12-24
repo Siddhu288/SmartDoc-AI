@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from app.db.chroma_store import get_chroma_client
-from app.routers import upload, qa, summarize
+from db.chroma_store import get_chroma_client
+from routers import upload, qa, summarize
 
 app = FastAPI()
 
