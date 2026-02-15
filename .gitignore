@@ -88,3 +88,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+app/db/chroma_db/ 
+*.bin 
+*.sqlite3 
