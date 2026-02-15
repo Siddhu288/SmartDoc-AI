@@ -10,5 +10,11 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false
+      - key: QA_MODEL
+        sync: false
+      - key: SUMMARY_MODEL
+        sync: false
+      - key: GEMINI_EMBEDDING_MODEL
+        sync: false
 
     healthCheckPath: /health
