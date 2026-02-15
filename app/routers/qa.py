@@ -7,6 +7,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 import os
 
 router = APIRouter()
+QA_MODEL = os.getenv("QA_MODEL", "gemini-2.5-flash-lite")
 
 class QueryRequest(BaseModel):
     query: str
@@ -55,7 +56,7 @@ Answer:
 
         # 5️⃣ Create LLM EXPLICITLY (this is the fix)
         llm = ChatGoogleGenerativeAI(
-            model="gemini-3-flash-preview",
+            model=QA_MODEL,
             temperature=0.5,
             google_api_key=GEMINI_API_KEY
         )

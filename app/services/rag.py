@@ -12,6 +12,8 @@ from db.chroma_store import get_chroma_client
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+SUMMARY_MODEL = os.getenv("SUMMARY_MODEL", "gemini-3-flash-preview")
+EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "models/gemini-embedding-001")
 
 def load_document(file_stream: BytesIO, file_extension: str):
     docs = []
@@ -50,7 +52,7 @@ def create_embeddings_and_store(documents, collection_name: str):
     # embeddings = HuggingFaceEmbeddings(
     #     model_name="sentence-transformers/all-MiniLM-L6-v2",
     # )
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", google_api_key=GEMINI_API_KEY)
+    embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL, google_api_key=GEMINI_API_KEY)
     # Use a persistent client for ChromaDB
     client = get_chroma_client()
     # client = chromadb.PersistentClient(path="../chroma_db")
@@ -64,11 +66,11 @@ def create_embeddings_and_store(documents, collection_name: str):
 
 def get_rag_chain(collection_name: str):
     # embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004", google_api_key=GEMINI_API_KEY)
+    embeddings = GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL, google_api_key=GEMINI_API_KEY)
     client = get_chroma_client()
     vector_store = Chroma(client=client, collection_name=collection_name, embedding_function=embeddings)
     
-    llm = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", temperature=0.5, google_api_key=GEMINI_API_KEY)
+    llm = ChatGoogleGenerativeAI(model=SUMMARY_MODEL, temperature=0.5, google_api_key=GEMINI_API_KEY)
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",

@@ -12,8 +12,8 @@ import os
 load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") 
-
-
+SUMMARY_MODEL = os.getenv("SUMMARY_MODEL", "gemini-3-flash-preview")
+EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "models/gemini-embedding-001")
 router = APIRouter()
 
 class SummarizeRequest(BaseModel):
@@ -24,7 +24,7 @@ async def summarize_document(request: SummarizeRequest):
     try:
         # Setup embeddings + vector DB
         embeddings = GoogleGenerativeAIEmbeddings(
-            model="models/embedding-001", 
+            model=EMBEDDING_MODEL, 
             google_api_key=GEMINI_API_KEY
         )
         client = get_chroma_client()
@@ -49,7 +49,7 @@ async def summarize_document(request: SummarizeRequest):
 
         # Setup streaming LLM
         llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
+            model=SUMMARY_MODEL,
             temperature=0.5,
             google_api_key=GEMINI_API_KEY,
             streaming=True
