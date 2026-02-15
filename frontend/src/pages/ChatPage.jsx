@@ -48,7 +48,7 @@ const ChatPage = () => {
       const BACKEND_URL =
         window.location.hostname === "localhost"
           ? "http://localhost:8000"
-          : "https://smartdoc-ai-t8p8.onrender.com";
+          : "https://smartdoc-ai-4xyh.onrender.com";
 
       const response = await fetch(`${BACKEND_URL}/api/v1/summarize`, {
         method: "POST",

@@ -1,9 +1,7 @@
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain.chains import RetrievalQA
-# from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-# from langchain_huggingface import HuggingFaceEmbeddings
 from io import BytesIO
 from docx import Document as DocxDocument
 from PyPDF2 import PdfReader
@@ -70,7 +68,7 @@ def get_rag_chain(collection_name: str):
     client = get_chroma_client()
     vector_store = Chroma(client=client, collection_name=collection_name, embedding_function=embeddings)
     
-    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0.5, google_api_key=GEMINI_API_KEY)
+    llm = ChatGoogleGenerativeAI(model="gemini-3-flash-preview", temperature=0.5, google_api_key=GEMINI_API_KEY)
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
